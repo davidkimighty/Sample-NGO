@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1021476772915583557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1826001980941509136}
+  m_Layer: 0
+  m_Name: BallHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1826001980941509136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021476772915583557}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.007, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6617613841134410506}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5397939548101310653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16,7 +47,7 @@ PrefabInstance:
     - target: {fileID: 989931804319611813, guid: efdb04ef7bd134583a7868c28fa195f7,
         type: 3}
       propertyPath: m_Name
-      value: PlayerControllerPhysicsNetwork
+      value: NetworkPlayerControllerPhysics
       objectReference: {fileID: 0}
     - target: {fileID: 989931804319611813, guid: efdb04ef7bd134583a7868c28fa195f7,
         type: 3}
@@ -170,8 +201,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1242758001783874487, guid: efdb04ef7bd134583a7868c28fa195f7,
+        type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 1826001980941509136}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 989931804319611813, guid: efdb04ef7bd134583a7868c28fa195f7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5180922785965954391}
     - targetCorrespondingSourceObject: {fileID: 989931804319611813, guid: efdb04ef7bd134583a7868c28fa195f7,
         type: 3}
       insertIndex: -1
@@ -179,7 +218,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 989931804319611813, guid: efdb04ef7bd134583a7868c28fa195f7,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: -5180922785965954391}
+      addedObject: {fileID: -3478137631612293460}
+    - targetCorrespondingSourceObject: {fileID: 989931804319611813, guid: efdb04ef7bd134583a7868c28fa195f7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5278095459455476982}
   m_SourcePrefab: {fileID: 100100000, guid: efdb04ef7bd134583a7868c28fa195f7, type: 3}
 --- !u!1 &3215050279713956419 stripped
 GameObject:
@@ -193,32 +236,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5397939548101310653}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1293588095326041900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5140195764311982872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 995839b100b6f460f9e2206d83e1ca81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerBody: {fileID: 6700885988901879294}
-  _playerController: {fileID: 7383519340385863424}
-  _cameraHolder: {fileID: 3215050279713956419}
-  _playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  _rayDir: {x: 0, y: -1, z: 0}
-  _floatHeight: 1.1
-  _rayLength: 1.5
-  _rayStartPointOffset: 0.5
-  _springStrength: 500
-  _springDamper: 50
-  _rotationStrength: 100
-  _rotationDamper: 10
 --- !u!114 &-5180922785965954391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +256,89 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &1293588095326041900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140195764311982872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995839b100b6f460f9e2206d83e1ca81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serverAuth: 1
+  _playerBody: {fileID: 6700885988901879294}
+  _playerController: {fileID: 7383519340385863424}
+  _cameraHolder: {fileID: 3215050279713956419}
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _rayDir: {x: 0, y: -1, z: 0}
+  _floatHeight: 1.1
+  _rayLength: 1.5
+  _rayStartPointOffset: 0.5
+  _springStrength: 500
+  _springDamper: 50
+  _maxSpeed: 6
+  _acceleration: 150
+  _maxAcceleration: 200
+  _rotationStrength: 100
+  _rotationDamper: 10
+--- !u!114 &-3478137631612293460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140195764311982872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f5cb19b2abb44e7b4c58128e4e3d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fireAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Fire
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: ca9e954a-13fc-4e34-8546-063a0148145c
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -7242179959188172536, guid: 1d37e1f077d5941a69357c529139b042,
+      type: 3}
+  _ballPrefab: {fileID: 6840086985726722381, guid: 13d70b396acdf40f58a59d803fb09196,
+    type: 3}
+  _ballSpawnPoint: {fileID: 1826001980941509136}
+--- !u!114 &5278095459455476982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140195764311982872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d62f3d8e0e6a5432a86825a4e24bd9b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 6617613841134410548}
+--- !u!4 &6617613841134410506 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1242758001783874487, guid: efdb04ef7bd134583a7868c28fa195f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5397939548101310653}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6617613841134410548 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1242758001783874441, guid: efdb04ef7bd134583a7868c28fa195f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5397939548101310653}
+  m_PrefabAsset: {fileID: 0}
 --- !u!54 &6700885988901879294 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 1591742259164808515, guid: efdb04ef7bd134583a7868c28fa195f7,

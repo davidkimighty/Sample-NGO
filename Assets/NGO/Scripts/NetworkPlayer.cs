@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class NetworkPlayer : NetworkBehaviour
 {
+    [SerializeField] private bool _serverAuth = true;
     [SerializeField] private Rigidbody _playerBody = null;
     [SerializeField] private PlayerControllerPhysics _playerController = null;
     [SerializeField] private GameObject _cameraHolder = null;
@@ -25,9 +26,14 @@ public class NetworkPlayer : NetworkBehaviour
     [SerializeField] private float _rotationDamper = 10f;
 
     private bool _initialized = false;
-    private NetworkVariable<PlayerNetworkData> _playerNetworkData = new(writePerm: NetworkVariableWritePermission.Owner);
+    private NetworkVariable<PlayerNetworkData> _playerNetworkData = null;
     private bool _grounded = true;
-    private Vector3 _targetVel = Vector3.zero;
+
+    private void Awake()
+    {
+        var writePermission = _serverAuth ? NetworkVariableWritePermission.Server : NetworkVariableWritePermission.Owner;
+        _playerNetworkData = new(writePerm: writePermission);
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -45,13 +51,39 @@ public class NetworkPlayer : NetworkBehaviour
 
         if (IsOwner)
         {
-            _playerNetworkData.Value = new PlayerNetworkData()
+            var data = new PlayerNetworkData()
             {
                 Position = _playerBody.position,
                 Rotation = _playerBody.rotation
             };
+
+            if (IsServer || !_serverAuth)
+                _playerNetworkData.Value = data;
+            else
+                TransmitDataServerRpc(data);
         }
     }
+
+    #region Network
+    [ServerRpc]
+    private void TransmitDataServerRpc(PlayerNetworkData data)
+    {
+        _playerNetworkData.Value = data;
+    }
+
+    private struct PlayerNetworkData : INetworkSerializable
+    {
+        public Vector3 Position;
+        public Quaternion Rotation;
+
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+        {
+            serializer.SerializeValue(ref Position);
+            serializer.SerializeValue(ref Rotation);
+        }
+    }
+
+    #endregion
 
     private void FixedUpdate()
     {
@@ -63,6 +95,7 @@ public class NetworkPlayer : NetworkBehaviour
         Rotation();
     }
 
+    #region Player Movement
     private (bool, RaycastHit) CastRay()
     {
         Vector3 startPoint = _playerBody.position;
@@ -111,15 +144,5 @@ public class NetworkPlayer : NetworkBehaviour
         _playerBody.AddTorque((axis.normalized * (rotationRadians * _rotationStrength)) - (_playerBody.angularVelocity * _rotationDamper));
     }
 
-    private struct PlayerNetworkData : INetworkSerializable
-    {
-        public Vector3 Position;
-        public Quaternion Rotation;
-
-        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-        {
-            serializer.SerializeValue(ref Position);
-            serializer.SerializeValue(ref Rotation);
-        }
-    }
+    #endregion
 }

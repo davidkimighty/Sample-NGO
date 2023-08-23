@@ -13,6 +13,7 @@ public class RPCTest : NetworkBehaviour
         }
     }
 
+    // ServerRpc is a code that can only run on the server that is triggered by clients.
     [ServerRpc]
     void TestServerRpc(int value, ulong sourceNetworkObjectId)
     {
@@ -20,6 +21,7 @@ public class RPCTest : NetworkBehaviour
         TestClientRpc(value, sourceNetworkObjectId);
     }
 
+    // ClientRpc can only be called on the server but, the code will be executed on all the clients.
     [ClientRpc]
     void TestClientRpc(int value, ulong sourceNetworkObjectId)
     {
