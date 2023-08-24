@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/NGO/Scenes/NetworkCharacter.unity
     guid: 45d26fa7995a14234bc809c8a6d063e3
+  - enabled: 1
+    path: Assets/NGO/Scenes/TestingRelay.unity
+    guid: 92c0f5911d09741d187042b942e48c83
   m_configObjects: {}
