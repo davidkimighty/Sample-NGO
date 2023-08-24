@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/NGO/Scenes/TestingRelay.unity
     guid: 92c0f5911d09741d187042b942e48c83
+  - enabled: 1
+    path: Assets/NGO/Scenes/RelayLobby.unity
+    guid: 668a8019b980b40c0a2736731c7dea87
   m_configObjects: {}
